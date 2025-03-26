@@ -1,0 +1,174 @@
+{% load static %}
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no">
+
+    <meta name="description" content="{{ meta_description }}">
+    <meta property="og:title" content="{{ meta_og_title }}">
+    <meta property="og:url" content="{{ meta_og_url }}">
+    <meta property="og:description" content="{{ meta_og_description }}">
+    <meta property="og:image" content="{{ meta_og_image_url }}">
+
+    <meta name="google-site-verification" content="jGANB8UvLXsxJ0MENG86lNu9mnYcoGLNeLA6F11qEeQ" />
+
+    <title>{% block title %}Heypo{% endblock title %}</title>
+    <link rel="icon" href="{% static 'icons/favicon.png' %}">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Karla:wght@200;300;400;500;600;700&family=Lato:wght@300;400;700;900&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" integrity="sha512-iecdLmaskl7CVkqkXNQ/ZH/XLlvWZOJyj7Yy7tcenmpD1ypASozpmT/E0iPtmFIB46ZmdtAc9eNBvH0H/ZpiBw==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <link rel="stylesheet" href="{% static 'css/base.css' %}" />
+    {% block link %}
+    {% endblock link %}
+</head>
+<body id="body">
+    <div id="lds-ripple-container">  <!--Loader-->
+        <div class="lds-ripple"><div></div><div></div></div>
+    </div>
+    <header id="header">
+        <div id="header-top">
+            <div class="left-section">
+                <a href="/" class="img-container"><img src="{% static 'icons/heypotextlogo.png' %}" class="kf-logo" alt="heypo"></a>
+            </div>
+            <div class="right-section">
+                <div class="subscribe"><a href="#footer">Subscribe</a></div>
+                <form action="/search/1/" class="search-form">
+                    <input type="text" name="q" id="search-bar-1" placeholder="Find" required/>
+                    <button type="submit" id="search-button-1" onclick="show_sb1()"><img src="{% static 'icons/search.png' %}" alt=""></button>
+                </form>
+                <div class="menu-button">
+                    <span class="bar"></span>
+                    <span class="bar"></span>
+                    <span class="bar"></span>
+                </div>
+            </div>
+        </div>
+
+        <div id="menu-drop-down">
+            <form action="/search/1/" class="search-form">
+                <input type="text" name="q" id="search-bar-2" placeholder="Find . . ." required/>
+                <button type="submit" id="search-button-2"><img src="{% static 'icons/search.png' %}" alt=""></button>
+            </form>
+            <a href="/tips/1" class="category">Tips</a>
+            <a href="/education/1" class="category">Education</a>
+            <a href="/technology/1" class="category">Technology</a>
+            <a href="/science/1" class="category">Science</a>
+            <a href="/world/1" class="category">World</a>
+            <a href="/economy/1" class="category">Economy</a>
+            <a href="/lifestyle/1" class="category">Lifestyle</a>
+            <a href="/politics/1" class="category">Politics</a>
+            <a href="/sports/1" class="category">Sports</a>
+        </div>
+
+        <div id="header-bottom">
+            <a href="/tips/1" class="category">Tips</a>
+            <a href="/education/1" class="category">Education</a>
+            <a href="/technology/1" class="category">Technology</a>
+            <a href="/science/1" class="category">Science</a>
+            <a href="/world/1" class="category">World</a>
+            <a href="/economy/1" class="category">Economy</a>
+            <a href="/lifestyle/1" class="category">Lifestyle</a>
+            <a href="/politics/1" class="category">Politics</a>
+            <a href="/sports/1" class="category">Sports</a>
+        </div>
+
+        {% for message in messages %}
+        <div class="popup-container">
+            <div class="popup-box">
+                <button type="button" class="close-button" onclick="close_popup()">&times;</button>
+                <h2>Thankyou<br>for subscribing !</h2>
+                <p class="message">Check your email for the confirmation message !</p>
+                <button type="button" class="ok-button" onclick="close_popup()">OK</button>
+            </div>
+        </div>
+        {% endfor %}
+    </header>
+
+    <main id="main">
+        {% block content %}
+
+        {% endblock content %}
+    </main>
+
+    <footer id="footer">
+        <div id="footer-subscribe-container">
+            <div class="subscribe-container">
+                <div class="subscribe-text-container">
+                    <h2 class="subscribe-title">
+                        Subscribe
+                        <br>
+                        to the Heypo newsletters
+                    </h2>
+                    <p class="subscribe-description">
+                        <!-- Informasi dari seluruh dunia disajikan untuk Anda. -->
+                        Information from all over the world is presented to you.
+                        <br>
+                        By clicking on the Subscribe button, you are agreeing to our
+                        <a href="/privacy-policy">Privacy Policy</a>.
+                    </p>
+                </div>
+                <form action="{% if search_path %}{{ search_path }}{% else %}.{% endif %}" method="POST" class="subscribe-form">
+                    {% csrf_token %}
+                    {{ email_form.email }}
+                    <input type="hidden" name="form_type" value="email_form">
+                    {% if search_path %}
+                    <input type="hidden" name="search_path" value="{{ search_path }}">
+                    {% endif %}
+                    <button class="subscribe-button">Subscribe</button>
+                </form>
+            </div>
+        </div>
+        <div id="footer-bottom-container">
+            <section class="widget-container">
+                <h2 class="widget-title">Find Us Here</h2>
+                <div class="icons-container">
+                    <a href="" target="_blank"><img src="{% static 'icons/instagram.png' %}" alt=""></a>
+                    <a href="" target="_blank"><img src="{% static 'icons/twitter.png' %}" alt=""></a>
+                    <a href="" target="_blank"><img src="{% static 'icons/telegram.png' %}" alt=""></a>
+                    <a href="" target="_blank"><img src="{% static 'icons/facebook.png' %}" alt=""></a>
+                </div>
+            </section>
+            <section class="widget-container">
+                <h2 class="widget-title">Explore</h2>
+                <ul class="menu-list">
+                    <li><a href="/tips/1" class="category">Tips</a></li>
+                    <li><a href="/education/1" class="category">Education</a></li>
+                    <li><a href="/technology/1" class="category">Technology</a></li>
+                    <li><a href="/science/1" class="category">Science</a></li>
+                    <li><a href="/world/1" class="category">World</a></li>
+                    <li><a href="/economy/1" class="category">Economy</a></li>
+                    <li><a href="/lifestyle/1" class="category">Lifestyle</a></li>
+                    <li><a href="/politics/1" class="category">Politics</a></li>
+                    <li><a href="/sports/1" class="category">Sports</a></li>
+                </ul>
+            </section>
+            <section class="widget-container">
+                <h2 class="widget-title">Company</h2>
+                <ul class="menu-list">
+                    <li class="menu-item"><a href="/about-us">About</a></li>
+                    <li class="menu-item"><a href="">Contact</a></li>
+                    <li class="menu-item"><a href="">Our Team</a></li>
+                    <li class="menu-item"><a href="">Advertise</a></li>
+                </ul>
+            </section>
+            <section class="widget-container">
+                <h2 class="widget-title">Legal</h2>
+                <ul class="menu-list">
+                    <li class="menu-item"><a href="/terms-and-conditions">Terms and Conditions</a></li>
+                    <li class="menu-item"><a href="/privacy-policy">Privacy Policy</a></li>
+                    <li class="menu-item"><a href="">Social Media Policy</a></li>
+                    <li class="menu-item"><a href="">Copyright Notice</a></li>
+                </ul>
+            </section>
+        </div>
+    </footer>
+    <script src="{% static 'js/base.js' %}"></script>
+    {% block js_link %}
+    {% endblock js_link %}
+    <!--Author of this template : @arjunahmad66-->
+</body>
+
+</html>

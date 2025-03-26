@@ -1,0 +1,64 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block title %}
+{{ article.title }} - Heypo
+{% endblock title %}
+
+{% block link %}
+<link rel="stylesheet" href="{% static 'css/article_page.css' %}" />
+{% endblock link %}
+
+{% block content %}
+<div class="container">
+    <div class="main-article">
+        <div class="article-address">
+            <a href="/" class="address">Home</a><a href="/{{ article.main_category.lower }}/1" class="address">{{ article.main_category }}</a><a href="/article/{{ article.slug }}" class="address">{{ article.title }}</a>
+        </div>
+        <p class="article-date-added">{{ article.date_added|date:"M d, Y" }}</p>
+        <h2 class="article-title">{{ article.title }}</h2>
+        <div class="article-intro">{{ article.intro|safe }}</div>
+        <a href="" class="img-container"><img src="{{ article.image.url }}" alt="{{ article.image_alt }}"></a>
+        <div class="article-body">{{ article.body|safe }}</div>
+        <div class="share">
+            <h3>Share to :</h3>
+            <div class="icons-container">
+                <a href="https://www.facebook.com/sharer.php?u={{ current_site }}{{ article.url }}" target="_blank">
+                    <i class="fab fa-facebook"></i>
+                </a>
+                <a href="https://twitter.com/share?url={{ current_site }}{{ article.url }}&text={{ article_title_url_text }}" target="_blank">
+                    <i class="fab fa-twitter"></i>
+                </a>
+                <a href="https://api.whatsapp.com/send?text=https://{{ current_site }}{{ article.url }}" target="_blank">
+                    <i class="fab fa-whatsapp"></i>
+                </a>
+            </div>
+        </div>
+    </div>
+
+    <div class="related-topics">
+        <h3>Related topics</h3>
+        <div class="topics-container">
+            {% for topic in article.topics %}
+            <a  href="/topic/{{ topic.lower }}/1" class="article-topic">{{ topic }}</a>
+            {% endfor %}
+        </div>
+    </div>
+
+    {% if article.related_articles %}
+    <div class="related-articles">
+        <h3>Related articles</h3>
+        <div class="articles-container">
+            {% for article in article.related_articles|slice:":4" %}
+            <div class="article-container">
+                <a href="{{ article.url }}" class="img-container"><img src="{{ article.image.url }}" alt="{{ article.image_alt }}"></a>
+                <div class="text-article-container">
+                    <a href="{{ article.url }}" class="article-title">{{ article.title }}</a>
+                </div>
+            </div>
+            {% endfor %}
+        </div>
+    </div>
+    {% endif %}
+</div>
+{% endblock content %}

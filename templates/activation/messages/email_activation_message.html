@@ -1,0 +1,10 @@
+{% autoescape off %}
+
+Hello {{ email }},
+
+You have recently signed up for Heypo Newsletter. 
+Confirm your email by clicking on the following link
+
+Confirmation link: http://{{ domain }}{% url 'activate' uidb64=uid token=token %}
+
+{% endautoescape %}

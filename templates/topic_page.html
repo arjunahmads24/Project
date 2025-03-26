@@ -1,0 +1,169 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block title %}
+{{ topic }} - Heypo
+{% endblock title %}
+
+{% block link %}
+<link rel="stylesheet" href="{% static 'css/category_page.css' %}" />
+{% endblock link %}
+
+{% block content %}
+<div class="left-container">
+    <div class="header">
+        <h3>Topic</h3>
+        <h2 class="topic">{{ topic }}</h2>
+    </div>
+    <div class="articles-container">
+        {% for article in topic_articles|slice:ab_slice %}
+        <div class="article-container">
+            <a href="{{ article.url }}" class="img-container"><img src="{{ article.image.url }}" alt="{{ article.image_alt }}"></a>
+            <div class="text-article-container">
+                <a href="{{ article.url }}" class="article-title">{{ article.title }}</a>
+                <a href="{{ article.url }}" class="article-intro">{{ article.intro|safe }}</a>
+            </div>
+            <a href="{{ article.url }}" class="read-more">Read more &#8594;</a>
+        </div>
+        {% endfor %}
+    </div>
+    <div class="gtp-container"> <!-- gtp = go to page -->
+        {% if page_count == 1 %}
+        {% elif page_count == 2 %}
+            {% if page == 1 %}
+            <a>&lt;</a>
+            <a>1</a>
+            <a href="/topic/{{ topic.lower }}/2/" class="gtp">2</a>
+            <a href="/topic/{{ topic.lower }}/2/">&gt;</a>
+            {% elif page == 2 %}
+            <a href="/topic/{{ topic.lower }}/1/">&lt;</a>
+            <a href="/topic/{{ topic.lower }}/1/" class="gtp">1</a>
+            <a>2</a>
+            <a>&gt;</a>
+            {% endif %}
+        {% elif page_count == 3 %}
+            {% if page == 1 %}
+            <a>&lt;</a>
+            <a>1</a>
+            <a href="/topic/{{ topic.lower }}/2/" class="gtp">2</a>
+            <a href="/topic/{{ topic.lower }}/3/" class="gtp">3</a>
+            <a href="/topic/{{ topic.lower }}/2/">&gt;</a>
+            {% elif page == 2 %}
+            <a href="/topic/{{ topic.lower }}/1/">&lt;</a>
+            <a href="/topic/{{ topic.lower }}/1/" class="gtp">1</a>
+            <a>2</a>
+            <a href="/topic/{{ topic.lower }}/3/" class="gtp">3</a>
+            <a href="/topic/{{ topic.lower }}/3/">&gt;</a>
+            {% elif page == 3 %}
+            <a href="/topic/{{ topic.lower }}/2/">&lt;</a>
+            <a href="/topic/{{ topic.lower }}/1/" class="gtp">1</a>
+            <a href="/topic/{{ topic.lower }}/2/" class="gtp">2</a>
+            <a>3</a>
+            <a>&gt;</a>
+            {% endif %}
+        {% elif page_count == 4 %}
+            {% if page == 1 %}
+            <a>&lt;</a>
+            <a>1</a>
+            <a href="/topic/{{ topic.lower }}/2/" class="gtp">2</a>
+            <a href="/topic/{{ topic.lower }}/3/" class="gtp">3</a>
+            <a>...</a>
+            <a href="/topic/{{ topic.lower }}/2/">&gt;</a>
+            {% elif page == 2 %}
+            <a href="/topic/{{ topic.lower }}/1/">&lt;</a>
+            <a href="/topic/{{ topic.lower }}/1/" class="gtp">1</a>
+            <a>2</a>
+            <a href="/topic/{{ topic.lower }}/3/" class="gtp">3</a>
+            <a>...</a>
+            <a href="/topic/{{ topic.lower }}/3/">&gt;</a>
+            {% elif page == 3 %}
+            <a href="/topic/{{ topic.lower }}/2/">&lt;</a>
+            <a>...</a>
+            <a href="/topic/{{ topic.lower }}/2/" class="gtp">2</a>
+            <a>3</a>
+            <a href="/topic/{{ topic.lower }}/4/" class="gtp">4</a>
+            <a href="/topic/{{ topic.lower }}/4/">&gt;</a>
+            {% elif page == 4 %}
+            <a href="/topic/{{ topic.lower }}/3/">&lt;</a>
+            <a>...</a>
+            <a href="/topic/{{ topic.lower }}/2/" class="gtp">2</a>
+            <a href="/topic/{{ topic.lower }}/3/" class="gtp">3</a>
+            <a>4</a>
+            <a>&gt;</a>
+            {% endif %}
+        {% elif page_count > 4 %}
+            {% if page == 1 %}
+            <a>&lt;</a>
+            <a>1</a>
+            <a href="/topic/{{ topic.lower }}/2/" class="gtp">2</a>
+            <a href="/topic/{{ topic.lower }}/3/" class="gtp">3</a>
+            <a>...</a>
+            <a href="/topic/{{ topic.lower }}/2/">&gt;</a>
+            {% elif page == 2 %}
+            <a href="/topic/{{ topic.lower }}/1/">&lt;</a>
+            <a href="/topic/{{ topic.lower }}/1/" class="gtp">1</a>
+            <a>2</a>
+            <a href="/topic/{{ topic.lower }}/3/" class="gtp">3</a>
+            <a>...</a>
+            <a href="/topic/{{ topic.lower }}/3/">&gt;</a>
+            {% elif page == page_count|add:"-1" %}
+            <a href="/topic/{{ topic.lower }}/{{ page|add:'-1' }}/">&lt;</a>
+            <a>...</a>
+            <a href="/topic/{{ topic.lower }}/{{ page|add:'-1' }}/" class="gtp">{{ page|add:"-1" }}</a>
+            <a>{{ page }}</a>
+            <a href="/topic/{{ topic.lower }}/{{ page|add:'+1' }}/" class="gtp">{{ page|add:"+1" }}</a>
+            <a href="/topic/{{ topic.lower }}/{{ page|add:'+1' }}/">&gt;</a>
+            {% elif page == page_count %}
+            <a href="/topic/{{ topic.lower }}/{{ page|add:'-1' }}/">&lt;</a>
+            <a>...</a>
+            <a href="/topic/{{ topic.lower }}/{{ page|add:'-2' }}/" class="gtp">{{ page|add:"-2" }}</a>
+            <a href="/topic/{{ topic.lower }}/{{ page|add:'-1' }}/" class="gtp">{{ page|add:"-1" }}</a>
+            <a>{{ page }}</a>
+            <a>&gt;</a>
+            {% else %}
+            <a href="/topic/{{ topic.lower }}/{{ page|add:'-1' }}/">&lt;</a>
+            <a>...</a>
+            <a href="/topic/{{ topic.lower }}/{{ page|add:'-1' }}/" class="gtp">{{ page|add:"-1" }}</a>
+            <a>{{ page }}</a>
+            <a href="/topic/{{ topic.lower }}/{{ page|add:'+1' }}/" class="gtp">{{ page|add:"+1" }}</a>
+            <a>...</a>
+            <a href="/topic/{{ topic.lower }}/{{ page|add:'+1' }}/">&gt;</a>
+            {% endif %}
+        {% endif %}
+    </div>
+</div>
+
+<div class="line"></div>
+
+<div class="right-container">
+    <div class="articles-container">
+        <div class="header">
+            <h2>Recent Articles</h2>
+        </div>
+        <div class="articles-container">
+            {% for article in recent_articles|slice:":4" %}
+            <a href="{{ article.url }}" class="article-title">{{ article.title }}</a>
+            {% endfor %}
+        </div>
+    </div>
+
+    <form action="/search/1/" class="search-form">
+        <input type="text" name="q" id="search-bar-3" placeholder="Find" required/>
+        <button type="submit" id="search-button-3"><img src="{% static 'icons/search.png' %}" alt=""></button>
+    </form>
+
+    <div class="articles-container">
+        <div class="header">
+            <h2>Popular Articles</h2>
+        </div>
+        <div class="articles-container">
+            {% for article in popular_articles|slice:":4" %}
+            <a href="{{ article.url }}" class="article-title">{{ article.title }}</a>
+            {% endfor %}
+        </div>
+    </div>
+</div>
+{% endblock content %}
+
+{% block js_link %}
+{% endblock js_link %}

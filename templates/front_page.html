@@ -1,0 +1,192 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block title %}
+Home - Heypo
+{% endblock title %}
+
+{% block link %}
+<link rel="stylesheet" href="{% static 'css/front_page.css' %}" />
+{% endblock link %}
+
+{% block content %}
+<div class="container-1">
+    <div class="main-article">
+        {% for article in popular_articles|slice:":1" %}
+        <div class="article-container">
+            <a href="{{ article.url }}" class="img-container"><img src="{{ article.image.url }}" alt="{{ article.image_alt }}"></a>
+            <a href="{{ article.url }}" class="black-layer"></a>
+            <div class="text-article-container">
+                <a href="/{{ article.main_category.lower }}/1" class="article-category">{{ article.main_category }}</a>
+                <a href="{{ article.url }}" class="article-title">{{ article.title }}</a>
+                <a href="{{ article.url }}" class="article-intro">{{ article.intro|safe }}</a>
+            </div>
+        </div>
+        {% endfor %}
+    </div>
+    <div class="side-articles">
+        <div class="articles-container">
+            {% for article in popular_articles|slice:"1:4" %}
+            <div class="article-container">
+                <a href="{{ article.url }}" class="img-container"><img src="{{ article.image.url }}" alt="{{ article.image_alt }}"></a>
+                <div class="text-article-container">
+                    <a href="{{ article.url }}" class="article-title">{{ article.title }}</a>
+                    <a href="/{{ article.main_category.lower }}/1" class="article-category">{{ article.main_category }}</a>
+                </div>
+            </div>
+            {% endfor %}
+        </div>
+    </div>
+</div>
+
+{% if editors_pick_articles %}
+<div class="container-2">
+    <div class="header">
+        <h2>Editor's Pick</h2>
+        <a href="ew/ep/1" class="more">View All &#8594;</a>
+    </div>
+    <div class="three-articles">
+        {% for article in editors_pick_articles|slice:":3"%}
+        <div class="article-container">
+            <a href="{{ article.url }}" class="img-container"><img src="{{ article.image.url }}" alt="{{ article.image_alt }}"></a>
+            <div class="text-article-container">
+                <a href="{{ article.url }}" class="article-title">{{ article.title }}</a>
+            </div>
+        </div>
+        {% endfor %}
+    </div>
+</div>
+{% endif %}
+
+<div class="container-3">
+    {% if world_articles %}
+    <div class="left-container">
+        <div class="header">
+            <h2>World</h2>
+            <a href="/world/1" class="more">More in World &#8594;</a>
+        </div>
+        <div class="articles-container">
+            <div class="line-1">
+                {% for article in world_articles|slice:":1" %}
+                <div class="article-container">
+                    <a href="{{ article.url }}" class="img-container"><img src="{{ article.image.url }}" alt="{{ article.image_alt }}"></a>
+                    <div class="text-article-container">
+                        <a href="{{ article.url }}" class="article-title">{{ article.title }}</a>
+                        <a href="{{ article.url }}" class="article-intro">{{ article.intro|safe }}</a>
+                    </div>
+                </div>
+                {% endfor %}
+            </div>
+            <div class="line-2">
+                {% for article in world_articles|slice:"1:3" %}
+                <div class="article-container">
+                    <a href="{{ article.url }}" class="img-container"><img src="{{ article.image.url }}" alt="{{ article.image_alt }}"></a>
+                    <div class="text-article-container">
+                        <a href="{{ article.url }}" class="article-title">{{ article.title }}</a>
+                    </div>
+                </div>
+                {% endfor %}
+            </div>
+        </div>
+    </div>
+    {% endif %}
+    {% if technology_articles %}
+    <div class="right-container">
+        <div class="header-and-articles-container">
+            <div class="header">
+                <h2>Technology</h2>
+                <a href="/technology/1" class="more">More in Technology &#8594;</a>
+            </div>
+            <div class="articles-container">
+                {% for article in technology_articles|slice:":6" %}
+                <div class="article-container">
+                    <a href="{{ article.url }}" class="img-container"><img src="{{ article.image.url }}" alt="{{ article.image_alt }}"></a>
+                    <div class="text-article-container">
+                        <a href="{{ article.url }}" class="article-title">{{ article.title }}</a>
+                    </div>
+                </div>
+                {% endfor %}
+            </div>
+        </div>
+    </div>
+    {% endif %}
+</div>
+
+{% if recent_articles %}
+<div class="container-4">
+    <div class="header">
+        <h2>What's New?</h2>
+        <a href="ew/wn/1" class="more">View All &#8594;</a>
+    </div>
+    <div class="three-articles">
+        {% for article in recent_articles|slice:":3"%}
+        <div class="article-container">
+            <a href="{{ article.url }}" class="img-container"><img src="{{ article.image.url }}" alt="{{ article.image_alt }}"></a>
+            <div class="text-article-container">
+                <a href="{{ article.url }}" class="article-title">{{ article.title }}</a>
+            </div>
+        </div>
+        {% endfor %}
+    </div>
+</div>
+{% endif %}
+
+<div class="container-5">
+    {% if sports_articles %}
+    <div class="left-container">
+        <div class="header">
+            <h2>Sports</h2>
+            <a href="/sports/1" class="more">More in Sports &#8594;</a>
+        </div>
+        <div class="articles-container">
+            <div class="line-1">
+                {% for article in sports_articles|slice:":1" %}
+                <div class="article-container">
+                    <a href="{{ article.url }}" class="img-container"><img src="{{ article.image.url }}" alt="{{ article.image_alt }}"></a>
+                    <div class="text-article-container">
+                        <a href="{{ article.url }}" class="article-title">{{ article.title }}</a>
+                        <a href="{{ article.url }}" class="article-intro">{{ article.intro|safe }}</a>
+                    </div>
+                </div>
+                {% endfor %}
+            </div>
+            <div class="line-2">
+                {% for article in sports_articles|slice:"1:3" %}
+                <div class="article-container">
+                    <a href="{{ article.url }}" class="img-container"><img src="{{ article.image.url }}" alt="{{ article.image_alt }}"></a>
+                    <div class="text-article-container">
+                        <a href="{{ article.url }}" class="article-title">{{ article.title }}</a>
+                    </div>
+                </div>
+                {% endfor %}
+            </div>
+        </div>
+    </div>
+    {% endif %}
+    {% if economy_articles %}
+    <div class="right-container">
+        <div class="header-and-articles-container">
+            <div class="header">
+                <h2>Economy</h2>
+                <a href="/economy/1" class="more">More in Economy &#8594;</a>
+            </div>
+            <div class="articles-container">
+                {% for article in economy_articles|slice:":6" %}
+                <div class="article-container">
+                    <a href="{{ article.url }}" class="img-container"><img src="{{ article.image.url }}" alt="{{ article.image_alt }}"></a>
+                    <div class="text-article-container">
+                        <a href="{{ article.url }}" class="article-title">{{ article.title }}</a>
+                    </div>
+                </div>
+                {% endfor %}
+            </div>
+        </div>
+    </div>
+    {% endif %}
+</div>
+
+<!--footer-->
+{% endblock content %}
+
+{% block js_link %}
+{% endblock js_link %}
